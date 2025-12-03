@@ -1,0 +1,10 @@
+# Ignore everything
+*
+
+# But don't ignore Lab folders and their contents
+!Lab*/
+!Lab*/**
+
+# Don't ignore .gitignore itself
+!.gitignore
+
