@@ -1,0 +1,81 @@
+create table EMPLOYEE 
+(Fname varchar(15) not null,
+ Minit char(1),
+ Lname varchar(15) not null,
+ Ssn char(9) not null,
+ Bdate date,
+ Address varchar(30),
+ Sex char(1),
+ Salary int,
+ Super_ssn char(9),
+ Dno int not null,
+ primary key(ssn),
+ foreign key(Super_ssn) references EMPLOYEE(ssn),
+ foreign key(Dno) references DEPARTMENT(Dnumber) ON UPDATE CASCADE
+); 
+
+ALTER TABLE EMPLOYEE
+ADD PRIMARY KEY (Ssn);
+
+ALTER TABLE EMPLOYEE ADD FOREIGN KEY(Super_ssn) REFERENCES EMPLOYEE(Ssn);
+
+create table DEPARTMENT
+(Dname varchar(15) not null,
+ Dnumber int not null,
+ Mgr_ssn char(9) not null,
+ Mgr_start_date date,
+ primary key(Dnumber),
+ foreign key(Mgr_ssn) references EMPLOYEE(ssn) ON UPDATE CASCADE
+);
+
+create table DEPT_LOCATIONS
+( Dnumber int not null,
+ Dlocation varchar(15) not null,
+ primary key(Dnumber, Dlocation),
+ foreign key(Dnumber) references DEPARTMENT(Dnumber) ON UPDATE CASCADE
+);
+
+create table WORKS_ON
+( Essn char(9) not null,
+ Pno int not null,
+ Hours double,
+ primary key(Essn, Pno),
+ foreign key(Essn) references EMPLOYEE(Ssn) ON UPDATE CASCADE,
+ foreign key(Pno) references PROJECT(Pnumber) ON UPDATE CASCADE
+);
+
+create table PROJECT
+(Pname varchar(30) not null,
+ Pnumber int not null,
+ Plocation varchar(30) not null,
+ Dnum int not null,
+ primary key(Pnumber),
+ foreign key(Dnum) references DEPARTMENT(Dnumber) ON UPDATE CASCADE
+);
+
+create table DEPENDENT
+(Essn char(9) not null,
+ Dependent_name varchar(15) not null,
+ Sex char not null,
+ Bdate date not null,
+ Relationship varchar(15) not null,
+ primary key (Essn,Dependent_name),
+ foreign key(Essn) references EMPLOYEE(Ssn) ON UPDATE CASCADE
+);
+
+
+
+SELECT * FROM EMPLOYEE;
+
+
+INSERT INTO EMPLOYEE VALUES ('Bob','M','Jones','999999999','1973-01-01','123 Fake St., Columbus, OH','M',30000,'333445555',5);
+
+UPDATE EMPLOYEE SET Address='234 Imaginary Blvd., Columbus OH' WHERE Ssn='999999999';
+
+DELETE FROM EMPLOYEE WHERE Fname = 'Bob' AND Lname = 'Jones';
+
+PRAGMA foreign_keys;
+
+PRAGMA foreign_keys = OFF;
+
+PRAGMA foreign_keys = ON;
