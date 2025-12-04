@@ -38,7 +38,8 @@ public class SaleStatements {
     /*
      * TODO
      */
-    public static String insertSale = "";
+    public static String insertSale = "INSERT INTO SALES (Sale_ID, Employee, Date, Total_Value) "
+            + "VALUES (?, ?, DATE('now'), ?);";
 
     /*
      * Insert into the Sales_Details table details regarding a unique record in
@@ -53,7 +54,8 @@ public class SaleStatements {
     /*
      * TODO
      */
-    public static String insertSaleDetail = "";
+    public static String insertSaleDetail = "INSERT INTO Sales_Details (Sale_ID, Record_ID, Num_Sold, Value) "
+            + "VALUES (?, ?, ?, ?);";
 
     /*
      * Update the row in the Record table pertaining to a record in the sale.
@@ -71,6 +73,7 @@ public class SaleStatements {
     /*
      * TODO
      */
-    public static String updateRecordCount = "";
+    public static String updateRecordCount = "UPDATE RECORD SET Record_Count = Record_Count - ? "
+            + "WHERE Record_ID = ?;";
 
 }

@@ -87,6 +87,7 @@ public class NewAddressEmployee {
             /*
              * TODO (Complete the code to disable auto commit)
              */
+            conn.setAutoCommit(false);
 
             /*
              * prepares the statement to update the employee's address by
@@ -115,6 +116,12 @@ public class NewAddressEmployee {
              * "Transaction complete. Address updated." Else, roll-back the
              * transaction.)
              */
+            if (rowsUpdated > 0) {
+                conn.commit();
+                System.out.println("Transaction complete. Address updated.");
+            } else {
+                conn.rollback();
+            }
 
             //re-enables auto commit on the connection
 

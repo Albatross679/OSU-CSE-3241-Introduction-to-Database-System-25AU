@@ -126,17 +126,14 @@ public class ExecuteSale {
                  * unknown integer in the statement to UniqueRecord.
                  *
                  */
+                ResultSet resultSet = null;
+                PreparedStatement totalCostStatement = conn.prepareStatement(obtainCostQuery);
+                totalCostStatement.setInt(1, UniqueRecord);
 
-                /*
-                 * TODO: Place your code here (Uncomment chunk when you are
-                 * done)
-                 *
-                 *
-                 * resultSet = totalCostStatement.executeQuery(); if
-                 * (resultSet.next()) { totalCost +=
-                 * RecordNums.get(UniqueRecord)*(resultSet.getDouble(1)); }
-                 *
-                 */
+                resultSet = totalCostStatement.executeQuery();
+                if (resultSet.next()) {
+                    totalCost += RecordNums.get(UniqueRecord) * (resultSet.getDouble(1));
+                }
 
             }
 
@@ -164,17 +161,12 @@ public class ExecuteSale {
              * Complete the code to roll-back the transaction if error occurs.
              *
              */
-
-            /*
-             *
-             * try {
-             *
-             * TODO (Place your code here, uncomment chunk when you are done)
-             *
-             * } catch (SQLException e1) { e1.printStackTrace(); }
-             * System.out.print("Transaction rolled back. Error occurred.");
-             *
-             */
+            try {
+                conn.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            System.out.print("Transaction rolled back. Error occurred.");
 
         }
 
@@ -220,15 +212,17 @@ public class ExecuteSale {
              * update.
              *
              */
-
-            /*
-             * TODO: PreparedStatement = (put code here)
-             *
-             */
+            PreparedStatement insertSaleStatement = conn.prepareStatement(insertSale);
+            insertSaleStatement.setInt(1, (int) saleInformation[5]);
+            insertSaleStatement.setInt(2, (int) saleInformation[0]);
+            insertSaleStatement.setDouble(3, (double) saleInformation[4]);
+            insertSaleStatement.executeUpdate();
 
             //Add Individual Unique Records to SalesDetails Table
 
+            @SuppressWarnings("unchecked")
             Set<Integer> records = (Set<Integer>) saleInformation[3];
+            @SuppressWarnings("unchecked")
             Map<Integer, Integer> RecordNums = (Map<Integer, Integer>) saleInformation[2];
             for (Integer UniqueRecord : records) {
 

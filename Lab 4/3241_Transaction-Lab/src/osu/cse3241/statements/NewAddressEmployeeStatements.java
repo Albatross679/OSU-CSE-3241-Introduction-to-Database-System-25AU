@@ -23,5 +23,5 @@ public class NewAddressEmployeeStatements {
     /*
      * TODO
      */
-    public static String updateEmployeeAddress = " ";
+    public static String updateEmployeeAddress = "UPDATE EMPLOYEE SET Address = ? WHERE Employee_ID = ?;";
 }
